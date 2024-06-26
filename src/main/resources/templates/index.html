@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home Page</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+	<style>
+		body {
+            background-color: #f8f9fa;
+        }
+        .search-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .stats-card {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+	</style>
+</head>
+
+<body>
+<div th:insert="fragments/header :: header"></div>
+
+<div class="container">
+	<div class="row mt-4">
+		<div class="col-md-6 mx-auto">
+			<div class="card text-white bg-primary mb-3 stats-card">
+				<div class="card-header">Total Books</div>
+				<div class="card-body">
+					<h5 class="card-title text-center" th:text="${totalBooks}">0</h5>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 mx-auto">
+			<div class="card text-white bg-success mb-3 stats-card">
+				<div class="card-header">Total Authors</div>
+				<div class="card-body">
+					<h5 class="card-title text-center" th:text="${totalAuthors}">0</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="search-container">
+	<h2 class="text-center mb-4">Search Books</h2>
+	<form th:action="@{/searchBook}" class="form-inline justify-content-center">
+		<input class="form-control mr-sm-2" name="keyword" id="keyword" type="text" placeholder="Enter book title..." aria-label="Search" th:value="${keyword}" style="width: 50%;">
+		<button class="btn btn-primary my-2 my-sm-0" type="submit">
+			<i class="fas fa-search"></i> Search
+		</button>
+	</form>
+	</div>
+</div>
+
+<div th:insert="fragments/footer :: footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

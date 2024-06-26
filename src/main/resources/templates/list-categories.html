@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>All Categories</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+	<script src="https://kit.fontawesome.com/be36ef5120.js" crossorigin="anonymous"></script>
+	<style>
+	.categories-list {
+	list-style-type: none;
+	padding: 0;
+	}
+	.categories-list li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	}
+	.categories-list .categories-details {
+	flex: 1;
+	}
+	.categories-list .categories-actions {
+	display: flex;
+	gap: 10px;
+	}
+	.categories-list .categories-actions a {
+	text-decoration: none;
+	}
+	</style>
+	
+</head>
+<body>
+	<div th:insert="fragments/header :: header"></div>
+	<div class="container my-2">
+		<div class="card">
+			<div class="card-body">
+				<div th:switch="${categories}" class="container my-5">
+					<p class="my-5">
+						<a href="/addCategory" class="btn btn-primary">
+							<i class="fa-solid fa-book-medical"></i>  Add Category</a>
+					</p>
+					<div class="col-md-12">
+						<h2>Categories List</h2>
+						<h2 th:case="null">No record found !!</h2>
+						<div th:case="*">
+							<ul class="categories-list">
+								<li th:each="category : ${categories}">
+									<div class="categories-details">
+										<p><strong><span th:text="${category.name}"></span></strong> </p>
+									</div>
+									<div class="book-actions">
+										<a th:href="@{/updateCategory/{id}(id=${category.id})}" class="btn btn-primary"><i class="fa-solid fa-pen"></i></a>
+										<a th:href="@{/remove-category/{id}(id=${category.id})}" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

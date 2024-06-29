@@ -19,13 +19,12 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-10">
-					<form action="#" th:action="@{/add-book}" th:object="${book}"
-						  method="post">
+					<form action="#" th:action="@{/add-book}" th:object="${book}" method="post" enctype="multipart/form-data">
 						<div class="row">
 
 							<div class="form-group col-md-8">
 								<label for="coverImage" class="col-form-label">Cover Image</label>
-								<input type="file" th:field="*{coverImage}" class="form-control" id="coverImage" />
+								<input type="file" name="coverImage" class="form-control" id="coverImage" />
 							</div>
 
 							<div class="form-group col-md-8">

@@ -42,8 +42,8 @@ public class Book {
 	@Column(name = "description", length = 250, nullable = false)
 	private String description;
 
-	@Column(name = "coverImage", length = 250)
-	private String coverImage;
+	@Column(name = "coverImagePath", length = 250)
+	private String coverImagePath;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinTable(name = "books_authors", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
@@ -60,12 +60,12 @@ public class Book {
 			@JoinColumn(name = "publisher_id") })
 	private Set<Publisher> publishers = new HashSet<Publisher>();
 
-	public Book(String isbn, String name, String serialName, String description, String coverImage) {
+	public Book(String isbn, String name, String serialName, String description, String coverImagePath) {
 		this.isbn = isbn;
 		this.name = name;
 		this.serialName = serialName;
 		this.description = description;
-		this.coverImage = coverImage;
+		this.coverImagePath = coverImagePath;
 	}
 
 	public void addAuthors(Author author) {

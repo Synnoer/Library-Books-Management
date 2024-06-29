@@ -17,8 +17,13 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-md-10">
-                    <form action="#" th:action="@{/update-book/{id}(id=${book.id})}" th:object="${book}" method="post">
+                    <form th:action="@{/update-book/{id}(id=${book.id})}" method="post" th:object="${book}" enctype="multipart/form-data">
                         <div class="row">
+
+                            <div class="form-group col-md-8">
+                                <label for="coverImage" class="col-form-label">Cover Image</label>
+                                <input type="file" name="coverImage" class="form-control" id="coverImage" />
+                            </div>
                         
                             <div class="form-group col-md-8">
                                 <label for="isbn" class="col-form-label">ISBN</label> 

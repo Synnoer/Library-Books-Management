@@ -54,7 +54,7 @@
 	<div class="row">
 		<div th:each="book : ${books}" class="col-md-4 col-sm-6">
 			<div class="card book-card">
-				<img th:src="@{${book.coverImage}}" alt="Cover Image" class="card-img-top book-cover"/>
+				<img th:src="@{${book.coverImagePath}}" alt="Cover Image" class="card-img-top book-cover"/>
 				<div class="card-body">
 					<h5 class="card-title book-title" th:text="${book.name}"></h5>
 					<p class="card-text book-serial" th:text="${'Serial: ' + book.serialName}"></p>

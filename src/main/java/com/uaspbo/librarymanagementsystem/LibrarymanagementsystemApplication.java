@@ -23,7 +23,7 @@ public class LibrarymanagementsystemApplication {
 	public CommandLineRunner initialCreate(BookService bookService) {
 		return (args) -> {
 
-			Book book = new Book("123", "The Two Towers", "Lord of The Rings", "For Frodo!", "Test");
+			Book book = new Book("123", "The Two Towers", "Lord of The Rings", "For Frodo!", "\t/uploads/TwoTowers.jpg");
 			Author author = new Author("Tolkien", "Test description");
 			Category category = new Category("Fantasy");
 			Publisher publisher = new Publisher("Mase");

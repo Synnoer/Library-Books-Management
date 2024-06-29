@@ -1,21 +1,25 @@
 package com.uaspbo.librarymanagementsystem.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.uaspbo.librarymanagementsystem.entity.Book;
 import com.uaspbo.librarymanagementsystem.service.AuthorService;
 import com.uaspbo.librarymanagementsystem.service.BookService;
 import com.uaspbo.librarymanagementsystem.service.CategoryService;
 import com.uaspbo.librarymanagementsystem.service.PublisherService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class BookController {
@@ -67,34 +71,64 @@ public class BookController {
 		return "add-book";
 	}
 
-	@RequestMapping("/add-book")
-	public String createBook(Book book, BindingResult result, Model model) {
+	@PostMapping("/add-book")
+	public String createBook(@RequestParam("coverImage") MultipartFile coverImage, Book book, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "add-book";
 		}
 
+		String fileName = StringUtils.cleanPath(coverImage.getOriginalFilename());
+		book.setCoverImagePath("/uploads/" + fileName);
+
+		try {
+			Path path = Paths.get("uploads/" + fileName);
+			Files.copy(coverImage.getInputStream(), path);
+		} catch (IOException e) {
+			e.printStackTrace();
+			// Handle error
+		}
+
 		bookService.createBook(book);
-		model.addAttribute("book", bookService.findAllBooks());
+		model.addAttribute("books", bookService.findAllBooks());
 		return "redirect:/books";
 	}
 
+
 	@GetMapping("/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-		final Book book = bookService.findBookById(id);
-
+		Book book = bookService.findBookById(id);
 		model.addAttribute("book", book);
+		model.addAttribute("categories", categoryService.findAllCategories());
+		model.addAttribute("authors", authorService.findAllAuthors());
+		model.addAttribute("publishers", publisherService.findAllPublishers());
 		return "update-book";
 	}
 
-	@RequestMapping("/update-book/{id}")
-	public String updateBook(@PathVariable("id") Long id, Book book, BindingResult result, Model model) {
+	@PostMapping("/update-book/{id}")
+	public String updateBook(@PathVariable("id") Long id, @RequestParam("coverImage") MultipartFile coverImage, @ModelAttribute("book") Book book, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			book.setId(id);
 			return "update-book";
 		}
 
+		if (!coverImage.isEmpty()) {
+			String fileName = StringUtils.cleanPath(coverImage.getOriginalFilename());
+			book.setCoverImagePath("/uploads/" + fileName);
+
+			try {
+				Path path = Paths.get("uploads/" + fileName);
+				Files.copy(coverImage.getInputStream(), path);
+			} catch (IOException e) {
+				e.printStackTrace();
+				// Handle error
+			}
+		} else {
+			// Handle the case where no new image is uploaded
+			Book existingBook = bookService.findBookById(id);
+			book.setCoverImagePath(existingBook.getCoverImagePath());
+		}
+
 		bookService.updateBook(book);
-		model.addAttribute("book", bookService.findAllBooks());
 		return "redirect:/books";
 	}
 
@@ -102,7 +136,7 @@ public class BookController {
 	public String deleteBook(@PathVariable("id") Long id, Model model) {
 		bookService.deleteBook(id);
 
-		model.addAttribute("book", bookService.findAllBooks());
+		model.addAttribute("books", bookService.findAllBooks());
 		return "redirect:/books";
 	}
 

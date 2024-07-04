@@ -38,11 +38,20 @@ public class BookController {
 		this.publisherService = publisherService;
 	}
 
-	@RequestMapping("/books")
-	public String findAllBooks(Model model) {
-		final List<Book> books = bookService.findAllBooks();
-
+	@GetMapping("/books")
+	public String findAllBooks(@RequestParam(required = false) Long categoryId,
+							   @RequestParam(required = false) Long publisherId,
+							   @RequestParam(required = false) Long authorId,
+							   Model model) {
+		List<Book> books = bookService.findAllBooks(categoryId, publisherId, authorId);
 		model.addAttribute("books", books);
+		model.addAttribute("categories", categoryService.findAllCategories());
+		model.addAttribute("publishers", publisherService.findAllPublishers());
+		model.addAttribute("authors", authorService.findAllAuthors());
+		// Add empty objects for the filters
+		model.addAttribute("categoryId", categoryId);
+		model.addAttribute("publisherId", publisherId);
+		model.addAttribute("authorId", authorId);
 		return "list-books";
 	}
 
@@ -89,7 +98,7 @@ public class BookController {
 		}
 
 		bookService.createBook(book);
-		model.addAttribute("books", bookService.findAllBooks());
+		model.addAttribute("books", bookService.findAllBooks(null, null, null));
 		return "redirect:/books";
 	}
 
@@ -136,7 +145,7 @@ public class BookController {
 	public String deleteBook(@PathVariable("id") Long id, Model model) {
 		bookService.deleteBook(id);
 
-		model.addAttribute("books", bookService.findAllBooks());
+		model.addAttribute("books", bookService.findAllBooks(null, null, null));
 		return "redirect:/books";
 	}
 

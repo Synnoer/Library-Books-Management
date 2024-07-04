@@ -22,10 +22,12 @@ public class BookServiceImpl implements BookService {
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<Book> findAllBooks() {
+	public List<Book> findAllBooks(Long categoryId, Long publisherId, Long authorId) {
+		if (categoryId != null || publisherId != null || authorId != null) {
+			return bookRepository.findAllByFilters(categoryId, publisherId, authorId);
+		}
 		return bookRepository.findAll();
 	}
-
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Book> searchBooks(String keyword) {

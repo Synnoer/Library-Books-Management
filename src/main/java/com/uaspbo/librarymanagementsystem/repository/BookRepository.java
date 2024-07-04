@@ -3,6 +3,7 @@ package com.uaspbo.librarymanagementsystem.repository;
 import java.util.List;
 
 import com.uaspbo.librarymanagementsystem.entity.Book;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +22,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 			"AND (:authorId IS NULL OR a.id = :authorId)")
 	List<Book> findAllByFilters(@Param("categoryId") Long categoryId,
 								@Param("publisherId") Long publisherId,
-								@Param("authorId") Long authorId);
+								@Param("authorId") Long authorId,
+								Sort sort);
 }

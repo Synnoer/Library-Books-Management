@@ -1,53 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>All Books</title>
-
+	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-	<link rel="stylesheet"href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-	
+	<title>Book Details</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+	<style>
+		.book-details-card {
+            max-width: 900px;
+            margin: auto;
+            margin-top: 50px;
+        }
+        .book-cover {
+            max-height: 400px;
+            object-fit: cover;
+        }
+        .book-info {
+            padding: 20px;
+        }
+        .book-info h2 {
+            font-weight: bold;
+        }
+        .book-info p {
+            margin-bottom: 10px;
+        }
+	</style>
 </head>
 <body>
-	<div th:insert="fragments/header :: header"></div>
-	<div class="container my-2">
-		<div class="card">
-			<div class="card-body">
-				<div class="container my-5">
-					<div class="col-md-12">
-						<div >
-							<table class="table table-striped table-responsive-md">
-								<thead>
-									<tr>
-										<th>ISBN </th>
-										<th>Title</th>
-										<th>Category Name</th>
-										<th>Author Name</th>
-										<th>Publisher Name</th>
-										<th>Serial Name</th>
-										<th>Description</th>
-								</tr>
-								</thead>
-								<tbody>
-									<tr >
-										<td th:text="${book.isbn}"></td>
-										<td th:text="${book.categories[0].name}"></td>
-										<td th:text="${book.name}"></td>
-										<td th:text="${book.authors[0].name}"></td>
-										<td th:text="${book.publishers[0].name}"></td>
-										<td th:text="${book.serialName}"></td>
-										<td th:text="${book.description}"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+<div th:insert="fragments/header :: header"></div>
+<div class="container">
+	<div class="card book-details-card">
+		<div class="row no-gutters">
+			<div class="col-md-4">
+				<img th:src="@{${book.coverImagePath}}" alt="Cover Image" class="img-fluid book-cover">
+			</div>
+			<div class="col-md-8">
+				<div class="card-body book-info">
+					<h2 th:text="${book.name}"></h2>
+					<p><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></p>
+					<p><strong>Category:</strong> <span th:text="${book.categories[0].name}"></span></p>
+					<p><strong>Author:</strong> <span th:text="${book.authors[0].name}"></span></p>
+					<p><strong>Publisher:</strong> <span th:text="${book.publishers[0].name}"></span></p>
+					<p><strong>Serial Name:</strong> <span th:text="${book.serialName}"></span></p>
+					<p><strong>Description:</strong></p>
+					<p th:text="${book.description}"></p>
 				</div>
 			</div>
 		</div>
 	</div>
-</body>
+</div>
 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
 </html>

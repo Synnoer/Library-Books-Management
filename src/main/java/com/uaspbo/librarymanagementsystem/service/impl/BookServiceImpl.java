@@ -5,6 +5,7 @@ import java.util.List;
 import com.uaspbo.librarymanagementsystem.entity.Book;
 import com.uaspbo.librarymanagementsystem.exception.NotFoundException;
 import com.uaspbo.librarymanagementsystem.repository.BookRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +23,14 @@ public class BookServiceImpl implements BookService {
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<Book> findAllBooks(Long categoryId, Long publisherId, Long authorId) {
+	public List<Book> findAllBooks(Long categoryId, Long publisherId, Long authorId, String sortField, String sortDir) {
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+
 		if (categoryId != null || publisherId != null || authorId != null) {
-			return bookRepository.findAllByFilters(categoryId, publisherId, authorId);
+			return bookRepository.findAllByFilters(categoryId, publisherId, authorId, sort);
 		}
-		return bookRepository.findAll();
+		return bookRepository.findAll(sort);
 	}
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override

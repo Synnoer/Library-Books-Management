@@ -6,7 +6,7 @@ import com.uaspbo.librarymanagementsystem.entity.Book;
 
 public interface BookService {
 
-	public List<Book> findAllBooks(Long categoryId, Long publisherId, Long authorId);
+	public List<Book> findAllBooks(Long categoryId, Long publisherId, Long authorId, String sortField, String sortDir);
 	
 	public List<Book> searchBooks(String keyword);
 

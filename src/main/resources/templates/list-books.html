@@ -72,6 +72,13 @@
 	<div th:if="${books.empty}" class="alert alert-info" role="alert">
 		No books found. Start by adding a new book!
 	</div>
+	<div class="row mb-2">
+		<div class="col-md-12">
+			<a th:href="@{/books(sortField='name', sortDir=${reverseSortDir})}" class="btn btn-link">
+				Sort by Name <i class="fas" th:classappend="${sortDir == 'asc' ? 'fa-sort-alpha-up' : 'fa-sort-alpha-down'}"></i>
+			</a>
+		</div>
+	</div>
 	<div class="row">
 		<div th:each="book : ${books}" class="col-md-4 col-sm-6">
 			<div class="card book-card">

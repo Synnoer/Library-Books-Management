@@ -18,5 +18,5 @@ public interface BookService {
 
 	public void deleteBook(Long id);
 
-	long getTotalBooks();
+	public long getTotalBooks();
 }

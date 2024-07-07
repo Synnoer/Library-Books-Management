@@ -24,6 +24,12 @@ public class BookServiceImpl implements BookService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Book> findAllBooks(Long categoryId, Long publisherId, Long authorId, String sortField, String sortDir) {
+		if (sortField == null || sortField.isEmpty()) {
+			sortField = "name";
+		}
+		if (sortDir == null || sortDir.isEmpty()) {
+			sortDir = "asc";
+		}
 		Sort sort = Sort.by(sortField);
 		sort = sortDir.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
 

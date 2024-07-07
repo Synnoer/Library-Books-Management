@@ -1,28 +1,4 @@
-/* styles.css */
-.navbar {
-    background-color: #2c3e50;
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
-}
-
-.navbar-brand {
-    font-weight: bold;
-    color: #ecf0f1 !important;
-}
-
-.nav-link {
-    color: #ecf0f1 !important;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #3498db !important;
-}
-
-.nav-item.active .nav-link {
-    color: #3498db !important;
-}
-
-/* Additional styles for the main page */
+/* Home */
 body {
     background-color: #f8f9fa;
 }
@@ -38,4 +14,90 @@ body {
 .stats-card {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/*Book List*/
+.book-card {
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+.book-cover {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    height: 150px;
+    overflow: hidden;
+}
+
+.book-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.book-serial {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.book-actions {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+/*Book Details*/
+.book-details-card {
+    max-width: 900px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.book-details-cover {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.book-info {
+    padding: 20px;
+}
+
+.book-info h2 {
+    font-weight: bold;
+}
+
+.book-info p {
+    margin-bottom: 10px;
+}
+/* Categories List*/
+.categories-list {
+list-style-type: none;
+padding: 0;
+}
+
+.categories-list li {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px;
+border-bottom: 1px solid #ddd;
+}
+
+.categories-list .categories-details {
+flex: 1;
+}
+
+.categories-list .categories-actions {
+display: flex;
+gap: 10px;
+}
+
+.categories-list .categories-actions a {
+text-decoration: none;
 }

@@ -56,15 +56,6 @@ public class BookController {
 		return "list-books";
 	}
 
-	@RequestMapping("/searchBook")
-	public String searchBook(@Param("keyword") String keyword, Model model) {
-		final List<Book> books = bookService.searchBooks(keyword);
-
-		model.addAttribute("books", books);
-		model.addAttribute("keyword", keyword);
-		return "list-books";
-	}
-
 	@RequestMapping("/book/{id}")
 	public String findBookById(@PathVariable("id") Long id, Model model) {
 		final Book book = bookService.findBookById(id);
